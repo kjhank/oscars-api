@@ -1,22 +1,34 @@
 require('dotenv').config();
 const express = require('express');
-const { Pool } = require('pg');
-
-const app = express();
-const pool = new Pool({
-  ssl: {
-    rejectUnauthorized: false,
-    require: true,
-  },
-});
-
-app.use(express.json());
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const { generic, users } = require('./routes');
 
 const APP_PORT = process?.env?.APP_PORT ?? 8080;
 
-app.listen(APP_PORT, () => console.log('running'));
+const corsConfig = {
+  origin: `http://localhost:${APP_PORT}`,
+};
 
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res);
-  pool.end();
+const app = express();
+
+app.use(cors(corsConfig));
+app.use(bodyParser.json());
+app.use(express.json());
+app.use(users);
+app.use(generic);
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use((error, req, res, next) => {
+  // console.log({ error });
+
+  console.log(error.statusCode);
+
+  if (error.statusCode) {
+    res.status(error.statusCode).send(error.message);
+  } else {
+    res.status(500).send('Unknown error');
+  }
 });
+
+app.listen(APP_PORT, () => console.log('running'));

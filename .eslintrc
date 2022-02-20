@@ -32,6 +32,7 @@
         "objects": "always-multiline"
       }
     ],
+    "import/no-unresolved": "off",
     "multiline-ternary": [
       "warn",
       "always-multiline"

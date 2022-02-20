@@ -3,7 +3,10 @@
     "baseUrl": ".",
     "module": "es6",
     "paths": {
-      "@db": ["./src/db/*"]
+      "#db": ["./src/db/*"],
+      "#controllers": ["./src/controllers/*"],
+      "#models": ["./src/models/*"],
+      "#routes": ["./src/routes/*"]
     },
     "target": "ES6"
   },
