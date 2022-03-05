@@ -7,6 +7,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.16.2"
@@ -15,17 +16,23 @@
     "eslint": "^8.9.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.4"
+    "eslint-plugin-import": "^2.25.4",
+    "nodemon": "^2.0.15"
   },
-  "imports": {
-    "#db/*": "./src/db",
-    "#controllers/*": "./src/controllers",
-    "#models/*": "./src/models",
-    "#routes/*": "./src/routes"
+  "_moduleAliases": {
+    "@db": "./src/db",
+    "@controllers": "./src/controllers",
+    "@middleware": "./src/middleware",
+    "@models": "./src/models",
+    "@routes": "./src/routes",
+    "@static": "./src/static"
   },
   "license": "MIT",
   "main": "src/app.js",
   "name": "oscars-api",
   "repository": "git@github.com:kjhank/oscarsAPI.git",
+  "scripts": {
+    "dev": "nodemon ./src/app.js"
+  },
   "version": "0.1.0"
 }

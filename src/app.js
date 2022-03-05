@@ -1,34 +1,47 @@
+require('module-alias/register');
 require('dotenv').config();
-const express = require('express');
+
 const bodyParser = require('body-parser');
+const express = require('express');
 const cors = require('cors');
-const { generic, users } = require('./routes');
 
-const APP_PORT = process?.env?.APP_PORT ?? 8080;
+const {
+  corsConfig, urlEncodedConfig, routes,
+} = require('@static');
+const { db } = require('@models');
 
-const corsConfig = {
-  origin: `http://localhost:${APP_PORT}`,
-};
+const { APP_PORT } = process.env;
 
 const app = express();
 
 app.use(cors(corsConfig));
 app.use(bodyParser.json());
-app.use(express.json());
-app.use(users);
-app.use(generic);
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded(urlEncodedConfig));
 
-app.use((error, req, res, next) => {
-  // console.log({ error });
-
-  console.log(error.statusCode);
-
-  if (error.statusCode) {
-    res.status(error.statusCode).send(error.message);
-  } else {
-    res.status(500).send('Unknown error');
-  }
+app.get(routes.ROOT, (req, res) => {
+  res.json({ healthCheck: '✅' });
 });
 
-app.listen(APP_PORT, () => console.log('running'));
+require('@routes/auth.routes')(app);
+require('@routes/user.routes')(app);
+
+app.listen(APP_PORT, () => console.log(`running on ${APP_PORT}`));
+
+const Role = db.role;
+
+const initial = () => {
+  Role.create({
+    id: 0,
+    name: 'user',
+  });
+
+  Role.create({
+    id: 1,
+    name: 'admin',
+  });
+};
+
+db.sequelize.sync({ force: true }).then(() => {
+  console.log('Drop and Resync Db');
+  initial();
+});
