@@ -9,11 +9,13 @@ module.exports = function (app) {
   });
 
   app.post(
-    routes.SIGNUP,
+    routes.auth.SIGNUP,
     [verifySignup.checkDuplicateUsernameOrEmail, verifySignup.checkIfRolesExist],
 
     controller.signUp
   );
 
-  app.post(routes.SIGNIN, controller.signIn);
+  app.post(routes.auth.REFRESH_TOKEN, controller.tokenRefresh);
+
+  app.post(routes.auth.SIGNIN, controller.signIn);
 };

@@ -19,6 +19,8 @@ module.exports = {
     },
   },
   jwtConfig: {
+    expiration: Number(process.env.TOKEN_EXPIRATION),
+    refreshExpiration: Number(process.env.REFRESH_TOKEN_EXPIRATION),
     secret: process.env.JWT_SECRET,
   },
   urlEncodedConfig: {

@@ -1,8 +1,11 @@
 module.exports = {
   routes: {
     ROOT: '/api',
-    SIGNIN: '/api/auth/signin',
-    SIGNUP: '/api/auth/signup',
+    auth: {
+      REFRESH_TOKEN: '/api/auth/refreshtoken',
+      SIGNIN: '/api/auth/signin',
+      SIGNUP: '/api/auth/signup',
+    },
     test: {
       ADMIN: '/api/test/admin',
       ALL: '/api/test/all',
