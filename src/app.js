@@ -41,7 +41,9 @@ const initial = () => {
   });
 };
 
-db.sequelize.sync({ force: true }).then(() => {
+(async () => {
+  await db.sequelize.sync({ force: true });
+
   console.log('Drop and Resync Db');
   initial();
-});
+})();
