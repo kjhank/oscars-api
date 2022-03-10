@@ -5,7 +5,7 @@ const { ROLES, user: User } = db;
 const checkDuplicateUsernameOrEmail = async (req, res, next) => {
   const user = await User.findOne({
     where: {
-      username: req.body.username,
+      username: req?.body?.username || null,
     },
   });
 
@@ -19,7 +19,7 @@ const checkDuplicateUsernameOrEmail = async (req, res, next) => {
 
   const value = await User.findOne({
     where: {
-      email: req.body.email,
+      email: req?.body?.email || null,
     },
   });
 

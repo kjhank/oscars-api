@@ -32,7 +32,7 @@
   "name": "oscars-api",
   "repository": "git@github.com:kjhank/oscarsAPI.git",
   "scripts": {
-    "dev": "nodemon ./src/app.js"
+    "dev": "nodemon ."
   },
-  "version": "0.1.0"
+  "version": "0.2.0"
 }
