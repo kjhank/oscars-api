@@ -40,6 +40,16 @@ db.user.hasOne(db.refreshToken, {
   targetKey: 'id',
 });
 
+db.refreshToken.belongsTo(db.user, {
+  foreignKey: 'userId',
+  targetKey: 'id',
+});
+
+db.user.hasOne(db.refreshToken, {
+  foreignKey: 'userId',
+  targetKey: 'id',
+});
+
 db.ROLES = ['user', 'admin'];
 
 module.exports = {

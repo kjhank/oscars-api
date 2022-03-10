@@ -10,9 +10,16 @@ const {
 
 const signUp = async ({ body }, res) => {
   try {
+    await User.beforeCreate(user => {
+      const hashedPassword = bcrypt.hashSync(user.password);
+
+      // eslint-disable-next-line no-param-reassign
+      user.password = hashedPassword;
+    });
+
     const user = await User.create({
       email: body.email,
-      password: bcrypt.hashSync(body.password, 10),
+      password: body.password,
       roles: body.roles ?? ['user'],
       username: body.username,
     });
